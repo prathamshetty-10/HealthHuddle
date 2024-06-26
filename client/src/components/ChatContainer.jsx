@@ -8,13 +8,15 @@ import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 export default function ChatContainer({currentuser,currentChat}){
     const [messages,setMessages]=useState([]);
-    
+    const handleSendMessage=()=>{
+        console.log('hi');
+    }
     return(
         <div className="max-h-[100%] overflow-hidden ">
         
         {currentChat && (
         <div className="flex flex-col">
-            <div className="flex text-white justify-between items-center py-[1rem] px-[3rem]">
+            <div className="flex text-white justify-between items-center py-[1rem] px-[3rem] bg-[#ffffff39] rounded-3xl">
                 <div className="flex gap-[3rem]">
                     <img src={currentChat.secure_url2} className="h-[50px] w-[50px] rounded-full" />
                     <div className="text-white text-4xl">{currentChat?.username2} 
@@ -22,8 +24,8 @@ export default function ChatContainer({currentuser,currentChat}){
                 </div>
             </div>
 
-            <div className="h-[63vh] py-[0.5rem] px-[2rem] flex flex-col gap-[1rem] ">
-            <ScrollToBottom className="h-[63vh] ">
+            <div className="h-[62vh] py-[0.5rem] px-[2rem] flex flex-col gap-[1rem] ">
+            <ScrollToBottom className="h-[62vh] ">
             {
             messages.map((message)=>{
                 return(
