@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {IoMdSend} from 'react-icons/io'
 import toast from "react-hot-toast";
-import { getContactsRoute,searchUserRoute,addContactRoute } from "../utils/APIRoutes";
+import { getContactsRoute,searchUserRoute,addContactRoute ,deleteContactRoute} from "../utils/APIRoutes";
 function Contact(){
     const [contacts,setContacts]=useState([]);
     const [search,setSearch]=useState("");
@@ -78,6 +78,23 @@ function Contact(){
             
         }}
     }
+    const handleDelete=async(e,contact)=>{
+        e.preventDefault();
+        if(contact){
+        const data=await axios.post(deleteContactRoute,{
+            username1:currentuser?.username,
+            username2:contact.username2,
+        })
+        if(data.data.status==true){
+            toast.success(data.data.msg);
+            func();
+
+        }
+        else{
+            toast.error(data.data.msg)
+            
+        }}
+    }
     const searchContact=(event)=>{
         event.preventDefault();
         if(search.length>0){
@@ -131,8 +148,9 @@ function Contact(){
                     return(
                         <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-3xl bg-[#ffffff39] min-h-[5rem] w-[550px] transition ease-in-out duration-200 my-[10px]" key={index}>
                     <img src={contact.secure_url2} className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] rounded-full" />
-                    <div className="text-white">{contact.username2}</div>
-                    <div className="text-white text-xl"><div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div></div>
+                    <div className="text-white w-[200px]">{contact.username2}</div>
+                    <div className="text-white text-xl flex items-center justify-center gap-[2rem]"><div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div><div className="bg-red-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl hover:bg-red-300" onClick={(e)=>handleDelete(e,contact)}>Delete</div>
+                    </div>
                     </div>
                 )
                 }))

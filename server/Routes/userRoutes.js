@@ -3,7 +3,8 @@ import {
     register,
     getContacts,
     addContacts,
-    searchContacts
+    searchContacts,
+    deleteContact
   } from "../Controllers/userController.js";
   import express from 'express'
   import { upload } from "../middleware/multer.middleware.js";
@@ -15,6 +16,7 @@ import {
   router.post("/getcontacts",getContacts);
   router.post("/addContact",addContacts);
   router.post("/searchContact",searchContacts);
+  router.post("/deleteContact",deleteContact);
  
   //router.post("/allusers/:id",allusers)//all users excluding ourself
   

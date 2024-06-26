@@ -142,17 +142,20 @@ export const searchContacts = async (req, res, next) => {
 export const deleteContact = async (req, res, next) => {
   try {
     const { username1,username2 } = req.body;
-    const usernameCheck = await User.findOne({ username });
+    const usernameCheck = await User.findOne({ username1 });
       if (usernameCheck)
-          return res.json({ msg: "Username  doesnt exist", status: false });
+          return res.json({ msg: "Username 1 doesnt exist", status: false });
+      const usernameCheck2 = await User.findOne({ username2 });
+      if (usernameCheck2)
+          return res.json({ msg: "Username 2 doesnt exist", status: false });
       
       
       
-    const contact = await Contacts.remove({
+    const contact = await Contacts.findOneAndDelete({
       username1:username1,
       username2:username2,
     });
-    const contact2 = await Contacts.remove({
+    const contact2 = await Contacts.findOneAndDelete({
       username1:username2,
       username2:username1,
       
