@@ -1,18 +1,11 @@
 import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema({
-  from: {
-    
-    username:{type:String},
-    secure_url:{type:String},
-
-  },
-  to: {
-    
-    username:{type:String},
-    secure_url:{type:String},
-
-  },
+  username1:{type:String},
+  secure_url1:{type:String},
+  username2:{type:String},
+  secure_url2:{type:String},
+  
   
 });
 

@@ -83,13 +83,12 @@ export const register = async (req, res, next) => {
 export const getContacts = async (req, res, next) => {
   try {
     const { username } = req.body;
-    const contacts = await Contacts.find({from:{
-      username:`${username}`
-    }})
+    
+    const contacts = await Contacts.find({
+      username1:username
+    })
     if (!contacts)
       return res.json({ msg: "No Contacts available", status: false });
-    
-    
     return res.json({ status: true, contacts });
   } catch (ex) {
       console.log(ex);
@@ -98,7 +97,7 @@ export const getContacts = async (req, res, next) => {
 };
 export const addContacts = async (req, res, next) => {
   try {
-    const { username1, secure_url1, username2,secure_url2 } = req.body;
+    const { username1, secure_url1,username2,secure_url2 } = req.body;
     const usernameCheck1 = await User.findOne({ username1 });
       if (usernameCheck1)
           return res.json({ msg: "Username 1 doesnt exist", status: false });
@@ -108,16 +107,19 @@ export const addContacts = async (req, res, next) => {
       
       
     const contact = await Contacts.create({
-      from:{
-        username:username1,
-        secure_url:secure_url1
-      },
-      to:{
-        username:username2,
-        secure_url:secure_url2
-      }
+      username1:username1,
+      secure_url1:secure_url1,
+      username2:username2,
+      secure_url2:secure_url2
     });
-    return res.json({ status: true, contact });
+    const contact2 = await Contacts.create({
+      username1:username2,
+      secure_url1:secure_url2,
+      username2:username1,
+      secure_url2:secure_url1
+      
+    });
+    return res.json({ status: true,msg:'added contact'});
   } catch (ex) {
       console.log(ex);
     next(ex);
@@ -132,6 +134,30 @@ export const searchContacts = async (req, res, next) => {
     
     
     return res.json({ status: true, user });
+  } catch (ex) {
+      console.log(ex);
+    next(ex);
+  }
+};
+export const deleteContact = async (req, res, next) => {
+  try {
+    const { username1,username2 } = req.body;
+    const usernameCheck = await User.findOne({ username });
+      if (usernameCheck)
+          return res.json({ msg: "Username  doesnt exist", status: false });
+      
+      
+      
+    const contact = await Contacts.remove({
+      username1:username1,
+      username2:username2,
+    });
+    const contact2 = await Contacts.remove({
+      username1:username2,
+      username2:username1,
+      
+    });
+    return res.json({ status: true,msg:'deleted contact'});
   } catch (ex) {
       console.log(ex);
     next(ex);

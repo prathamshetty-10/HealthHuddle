@@ -8,7 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import {IoMdSend} from 'react-icons/io'
-import { getContactsRoute,searchUserRoute } from "../utils/APIRoutes";
+import toast from "react-hot-toast";
+import { getContactsRoute,searchUserRoute,addContactRoute } from "../utils/APIRoutes";
 function Contact(){
     const [contacts,setContacts]=useState([]);
     const [search,setSearch]=useState("");
@@ -19,12 +20,26 @@ function Contact(){
         localStorage.clear();
         navigate("/");
     }
+    const func=async()=>{
+        if(currentuser){
+            const data=await axios.post(`${getContactsRoute}`,{
+                username:currentuser.username
+            });
+            setContacts(data.data.contacts);
+            
+            
+        }
+        else{
+            navigate("/");
+        }
+    }
     function findIf(name){
-        
+        let val=false;
         contacts.map((contac)=>{
-            if(contac.username==name)return true;
+
+            if(contac.username2==`${name}`){val=true}
         })
-        return false;
+        return val;
     }
     function handleUserInput(e){
         
@@ -44,6 +59,25 @@ function Contact(){
             return;
         }
     }
+    const handleAddContact=async(e)=>{
+        e.preventDefault();
+        if(searchedUser){
+        const data=await axios.post(addContactRoute,{
+            username1:currentuser?.username,
+            secure_url1:currentuser?.avatar?.secure_url,
+            username2:searchedUser.username,
+            secure_url2:searchedUser.avatar?.secure_url
+        })
+        if(data.data.status==true){
+            toast.success(data.data.msg);
+            func();
+
+        }
+        else{
+            toast.error(data.data.msg)
+            
+        }}
+    }
     const searchContact=(event)=>{
         event.preventDefault();
         if(search.length>0){
@@ -51,23 +85,12 @@ function Contact(){
             setSearch("");
         }
     }
-    const func=async()=>{
-        if(currentuser){
-            const data=await axios.post(`${getContactsRoute}`,{
-                username:currentuser.username
-            });
-            setContacts(data.data.contacts);
-            
-            
-        }
-        else{
-            navigate("/");
-        }
-    }
+  
     
     useEffect(()=>{
         func();
     },[])
+    
     return(
         <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
         
@@ -95,18 +118,26 @@ function Contact(){
                 <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-3xl bg-[#ffffff39] min-h-[5rem] w-[350px] transition ease-in-out duration-200 my-[10px]" >
                     <img src={searchedUser.avatar.secure_url} className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] rounded-full" />
                     <div className="text-white">{searchedUser.username}</div>
-                    <div className="text-white text-xl">{(findIf(searchedUser.username) || searchedUser.username==currentuser.username)?(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div>):(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl hover:bg-green-300">Add</div>)}</div>
+                    <div className="text-white text-xl">{(findIf(searchedUser.username)==1 || searchedUser.username==currentuser.username)?(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div>):(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl hover:bg-green-300" onClick={(e)=>handleAddContact(e)}>Add</div>)}</div>
                     </div></div>):(<div className="text-white">
                 no such user
                 </div>)}
             </div>
             <div>
             <div className="flex justify-center items-center text-2xl mb-[20px] font-bold "><p className="text-white">Contacts</p></div>
+            <div className="flex flex-col justify-center items-center">
             {
                 contacts.length==0?(<div className="text-white flex items-center justify-center text-2xl"><p>No Contacts yet add contacts</p> </div>):(contacts?.map((contact,index)=>{
-
+                    return(
+                        <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-3xl bg-[#ffffff39] min-h-[5rem] w-[550px] transition ease-in-out duration-200 my-[10px]" key={index}>
+                    <img src={contact.secure_url2} className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] rounded-full" />
+                    <div className="text-white">{contact.username2}</div>
+                    <div className="text-white text-xl"><div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div></div>
+                    </div>
+                )
                 }))
             }
+            </div>
             
             
             </div>
