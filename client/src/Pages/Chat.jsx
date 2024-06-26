@@ -10,6 +10,9 @@ import axios from "axios";
 import {IoMdSend} from 'react-icons/io'
 import toast from "react-hot-toast";
 import { getContactsRoute } from "../utils/APIRoutes";
+import ContactsSide from "../components/ContactsSide.jsx";
+import Robot from '../assets/robot.gif'
+import ChatContainer from "../components/ChatContainer.jsx";
 function Chat(){
     const navigate=useNavigate();
     
@@ -45,7 +48,7 @@ function Chat(){
     <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
         
     <div className="h-[100vh] w-[85vw] bg-[#00000076] ">
-    <div className=" h-[10%] pt-[3rem] flex justify-center items-center gap-[1.5rem]">
+    <div className=" h-[10%] pt-[3rem] flex justify-center items-center gap-[1.5rem] mb-[40px]">
     
     <button onClick={()=>navigate('/chats')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><FaRocketchat className="mr-[4px]"/>Chats</button>
     <button onClick={()=>navigate('/contacts')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><MdPersonSearch className="mr-[4px]"/>Contacts</button>
@@ -53,6 +56,17 @@ function Chat(){
     <button onClick={handleClick1} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><BiPowerOff className="mr-[4px]"/>Logout</button>
     
 
+    
+    </div>
+    <div className="h-[83%] flex">
+        <div className="w-[25%] bg-[#080420] overflow-auto scrollbar-thumb-slate-700 h-[100%] border-r-[0.1rem] border-white">
+            <ContactsSide contacts={contacts} currentuser={currentuser} changeChat={handleChatChange}/>
+        </div>
+        <div className="w-[75%]">
+            {currentChat===undefined?(
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Chat to begin your conversation</p></div>):(<ChatContainer currentuser={currentuser} currentChat={currentChat} />)}
+            
+            </div>
     
     </div>
     </div></div>)
