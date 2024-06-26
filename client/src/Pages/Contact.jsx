@@ -8,15 +8,23 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import {IoMdSend} from 'react-icons/io'
-import { getContactsRoute } from "../utils/APIRoutes";
+import { getContactsRoute,searchUserRoute } from "../utils/APIRoutes";
 function Contact(){
     const [contacts,setContacts]=useState([]);
     const [search,setSearch]=useState("");
+    const [searchedUser,setSearchedUser]=useState(undefined);
     const [currentuser,setCurrentUser]=useState(JSON.parse(localStorage.getItem("login-user")));
     const navigate=useNavigate();
     const handleClick1=async()=>{
         localStorage.clear();
         navigate("/");
+    }
+    function findIf(name){
+        
+        contacts.map((contac)=>{
+            if(contac.username==name)return true;
+        })
+        return false;
     }
     function handleUserInput(e){
         
@@ -24,12 +32,30 @@ function Contact(){
         setSearch(value);
        
     }
+    const handleSearch=async(search1)=>{
+        const data=await axios.post(searchUserRoute,{
+            username:search1
+        })
+        if(data.data.status==true){
+            setSearchedUser(data.data.user[0]);
+        }
+        else{
+            setSearchedUser(undefined)
+            return;
+        }
+    }
+    const searchContact=(event)=>{
+        event.preventDefault();
+        if(search.length>0){
+            handleSearch(search);
+            setSearch("");
+        }
+    }
     const func=async()=>{
         if(currentuser){
             const data=await axios.post(`${getContactsRoute}`,{
                 username:currentuser.username
             });
-            console.log(data);
             setContacts(data.data.contacts);
             
             
@@ -59,14 +85,23 @@ function Contact(){
         <div className="h-[90%] overflow-auto">
             <div className="h-[300px] flex flex-col items-center justify-top mt-[50px] gap-[2rem]">
                 <h1 className="text-white text-2xl">Search users To Connect With !!</h1>
-                <form className="w-[60%] flex gap-[1rem] lg:gap-[2rem]" onSubmit={(e)=>{}}>
+                <form className="w-[60%] flex gap-[1rem] lg:gap-[2rem]" onSubmit={(e)=>{searchContact(e)}}>
                 <input type="text" placeholder="Search username here" value={search} onChange={handleUserInput} className="w-[85%] h-[3rem] rounded-[2rem] px-[2rem] bg-[#ffffff34] text-white"/>
                 <button type="submit" className="w-[15%] bg-[#9a86f3] flex justify-center items-center rounded-[2rem] hover:bg-[#ebe7ff] hover:text-blue-700 transition-all duration-200"><IoMdSend size={25}/></button>
             
             
             </form>
+            {searchedUser?(<div className="text-white">
+                <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-3xl bg-[#ffffff39] min-h-[5rem] w-[350px] transition ease-in-out duration-200 my-[10px]" >
+                    <img src={searchedUser.avatar.secure_url} className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] rounded-full" />
+                    <div className="text-white">{searchedUser.username}</div>
+                    <div className="text-white text-xl">{(findIf(searchedUser.username) || searchedUser.username==currentuser.username)?(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl">Added</div>):(<div className="bg-green-500 text-black font-bold mt-[8px] px-[0.6rem] py-[0.4rem] rounded-3xl hover:bg-green-300">Add</div>)}</div>
+                    </div></div>):(<div className="text-white">
+                no such user
+                </div>)}
             </div>
             <div>
+            <div className="flex justify-center items-center text-2xl mb-[20px] font-bold "><p className="text-white">Contacts</p></div>
             {
                 contacts.length==0?(<div className="text-white flex items-center justify-center text-2xl"><p>No Contacts yet add contacts</p> </div>):(contacts?.map((contact,index)=>{
 
