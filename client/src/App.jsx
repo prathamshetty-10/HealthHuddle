@@ -5,6 +5,7 @@ import Register from './Pages/Register.jsx'
 import Login from './Pages/Login.jsx'
 import Home from './Pages/Home.jsx'
 import Contact from './Pages/Contact.jsx'
+import Chat from './Pages/Chat.jsx'
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<Login/>}></Route>
       <Route path="/contacts" element={<Contact/>}></Route>
       <Route path="/home" element={<Home/>}></Route>
+      <Route path="/chats" element={<Chat/>}></Route>
     
     </Routes>
       
