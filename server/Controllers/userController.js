@@ -1,4 +1,5 @@
 import User from "../Models/userModel.js";
+import Contacts from "../Models/contactModel.js";
 import fs from "fs/promises"
 import cloudinary from 'cloudinary'
 
@@ -78,3 +79,61 @@ export const register = async (req, res, next) => {
       next(ex);
     }
   };
+  
+export const getContacts = async (req, res, next) => {
+  try {
+    const { username } = req.body;
+    const contacts = await Contacts.find({from:{
+      username:`${username}`
+    }})
+    if (!contacts)
+      return res.json({ msg: "No Contacts available", status: false });
+    
+    
+    return res.json({ status: true, contacts });
+  } catch (ex) {
+      console.log(ex);
+    next(ex);
+  }
+};
+export const addContacts = async (req, res, next) => {
+  try {
+    const { username1, secure_url1, username2,secure_url2 } = req.body;
+    const usernameCheck1 = await User.findOne({ username1 });
+      if (usernameCheck1)
+          return res.json({ msg: "Username 1 doesnt exist", status: false });
+      const usernameCheck2 = await User.findOne({ username2 });
+      if (usernameCheck2)
+          return res.json({ msg: "Username 2 doesnt exist", status: false });
+      
+      
+    const contact = await Contacts.create({
+      from:{
+        username:username1,
+        secure_url:secure_url1
+      },
+      to:{
+        username:username2,
+        secure_url:secure_url2
+      }
+    });
+    return res.json({ status: true, contact });
+  } catch (ex) {
+      console.log(ex);
+    next(ex);
+  }
+};
+export const searchContacts = async (req, res, next) => {
+  try {
+    const { username } = req.body;
+    const user = await User.find({username:`${username}`});
+    if (!user)
+      return res.json({ msg: "No user available", status: false });
+    
+    
+    return res.json({ status: true, user });
+  } catch (ex) {
+      console.log(ex);
+    next(ex);
+  }
+};

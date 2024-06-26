@@ -1,6 +1,9 @@
 import {
     login,
-    register
+    register,
+    getContacts,
+    addContacts,
+    searchContacts
   } from "../Controllers/userController.js";
   import express from 'express'
   import { upload } from "../middleware/multer.middleware.js";
@@ -9,6 +12,9 @@ import {
   
   router.post("/login", login);
   router.post("/register",upload.single("avatar"), register);
+  router.post("/getcontacts",getContacts);
+  router.post("/addContact",addContacts);
+  router.post("/searchContact",searchContacts);
  
   //router.post("/allusers/:id",allusers)//all users excluding ourself
   
