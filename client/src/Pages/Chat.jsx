@@ -13,6 +13,8 @@ import { getContactsRoute } from "../utils/APIRoutes";
 import ContactsSide from "../components/ContactsSide.jsx";
 import Robot from '../assets/robot.gif'
 import ChatContainer from "../components/ChatContainer.jsx";
+import io from 'socket.io-client'
+const socket=io.connect("http://localhost:5000");
 function Chat(){
     const navigate=useNavigate();
     
@@ -33,6 +35,7 @@ function Chat(){
                 username:currentuser.username
             });
             setContacts(data.data.contacts);
+            socket.emit('add-user',currentuser.username);
             
             
         }
@@ -64,7 +67,7 @@ function Chat(){
         </div>
         <div className="w-[75%]">
             {currentChat===undefined?(
-            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Chat to begin your conversation</p></div>):(<ChatContainer currentuser={currentuser} currentChat={currentChat} />)}
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Chat to begin your conversation</p></div>):(<ChatContainer currentuser={currentuser} currentChat={currentChat} socket={socket} />)}
             
             </div>
     

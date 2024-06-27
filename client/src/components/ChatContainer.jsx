@@ -8,12 +8,18 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { sendMessageRoute } from "../utils/APIRoutes";
-export default function ChatContainer({currentuser,currentChat}){
+export default function ChatContainer({currentuser,currentChat,socket}){
     const [messages,setMessages]=useState([]);
+    const [arrivalMessage,setArrivalmessage]=useState(null);
     const handleSendMessage=async(msg)=>{
         await axios.post(sendMessageRoute,{
             from:currentuser.username,
             to:currentChat.username2,
+            message:msg,
+        })
+        socket.emit("send-msg",{
+            to:currentChat.username2,
+            from:currentuser.username,
             message:msg,
         })
         
@@ -32,6 +38,22 @@ export default function ChatContainer({currentuser,currentChat}){
     useEffect(()=>{
         func();
     },[currentChat])
+    useEffect(()=>{
+        if(socket){
+            socket.on("msg-receive",(data)=>{
+                setArrivalmessage({fromSelf:false,message:data.message,from:data.from});
+            })
+        }
+    },[])
+    useEffect(()=>{
+        if(arrivalMessage){ 
+            if(arrivalMessage.from==currentChat.username2){
+             const newmsg={
+                fromSelf:false,
+                message:arrivalMessage.message
+             }
+             setMessages((prev)=>[...prev,newmsg])}}
+    },[arrivalMessage])
     return(
         <div className="max-h-[100%] overflow-hidden ">
         
