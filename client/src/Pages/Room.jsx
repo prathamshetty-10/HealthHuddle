@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { getRoomsRoute } from "../utils/APIRoutes";
 import RoomSide from '../components/RoomSide.jsx'
 import Robot from '../assets/robot.gif'
+import axios from "axios";
+import RoomContainer from "../components/RoomContainer.jsx";
 export default function Room(){
     const navigate=useNavigate();
     const [currentRoom,setCurrentRoom]=useState(undefined);
@@ -54,7 +56,7 @@ export default function Room(){
         </div>
         <div className="w-[75%]">
             {currentRoom===undefined?(
-            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom} socket={socket}/>)}
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom}/>)}
             
             </div>
     

@@ -10,9 +10,9 @@ export const addRoom = async (req, res, next) => {
             name:name,
             description:description,
         });
-        if(data)return res.json({msg:"room added"})
+        if(data)return res.json({msg:"room added",status:true})
             else{
-        return res.json({msg:"room not added"})}
+        return res.json({msg:"room not added",status:false})}
 
 
     }

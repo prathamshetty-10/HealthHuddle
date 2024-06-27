@@ -9,7 +9,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-export default function RoomContainer({currentuser,currentRoom,socket}){
+export default function RoomContainer({currentuser,currentRoom}){
     const [messages,setMessages]=useState([]);
     const handleSendMessage=async(msg)=>{
         console.log('hi');
@@ -51,7 +51,7 @@ export default function RoomContainer({currentuser,currentRoom,socket}){
         <div className="flex flex-col">
             <div className="flex text-white justify-between items-center py-[1rem] px-[3rem] bg-[#ffffff39] rounded-3xl">
                 <div className="flex gap-[3rem]">
-                    <SiGoogleclassroom  className="h-[50px] w-[50px] rounded-full" />
+                    <SiGoogleclassroom  className="h-[50px] w-[50px]" />
                     <div className="text-white text-4xl">{currentRoom?.name} 
                     </div>
                 </div>

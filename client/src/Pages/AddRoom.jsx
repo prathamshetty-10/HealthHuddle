@@ -7,7 +7,10 @@ import { MdPersonSearch } from "react-icons/md";
 import { useState } from "react";
 import { useEffect } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
 import Robot from '../assets/robot.gif'
+import { addRoomsRoute } from "../utils/APIRoutes";
+import axios from "axios";
 export  default  function AddRoom(){
     const navigate=useNavigate();
     const handleClick1=async()=>{
@@ -26,6 +29,30 @@ export  default  function AddRoom(){
             [name]:value
         })
     }
+    async function handleSubmit(event){
+        event.preventDefault();
+        if(!roomData.name || !roomData.description){
+            toast.error("Please fill all details");
+            return;
+
+        }
+        const { data } = await axios.post(addRoomsRoute,roomData);
+    
+          if (data.status === false) {
+            toast.error(data.msg);
+          }
+          if (data.status === true) {
+            toast.success('suggessfully added')
+            
+            setRoomData({
+                name:"",
+                description:"",
+                
+            });
+            navigate("/room");
+          }
+        
+            }
     return(
         <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
         
@@ -41,7 +68,7 @@ export  default  function AddRoom(){
         
         </div>
         <div className="h-[80%] flex items-center justify-center">
-        <form  className="bg-[#00000076] flex flex-col rounded-3xl px-[4rem] pt-[2.5rem] pb-[2rem] shadow-[0_0_5px_gray] gap-2 w-[400px]">
+        <form onSubmit={(e)=>handleSubmit(e)} className="bg-[#00000076] flex flex-col rounded-3xl px-[4rem] pt-[2.5rem] pb-[2rem] shadow-[0_0_5px_gray] gap-2 w-[400px]">
         <div className="flex gap-[1.5rem]">
             <IoArrowBackSharp  className="h-[50px] w-[50px] mr-[1rem] text-white cursor-pointer" onClick={()=>navigate('/room')}/>
             <h1 className="font-bold text-white text-3xl">Add Room</h1>
@@ -50,7 +77,7 @@ export  default  function AddRoom(){
         
         <textarea type="text" placeholder="Enter description of the room" name="description" value={roomData.description} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] mb-[1rem]   resize-none h-[130px]"/>
         
-        <button type="submit" className="bg-[#997af0] hover:bg-[#4e0eff] p-[1rem] border-[0.1rem]  rounded-2xl font-[1rem] text-white w-[100%] mb-[0.5rem] ">Click</button>
+        <button type="submit" className="bg-[#997af0] hover:bg-[#4e0eff] p-[1rem] border-[0.1rem]  rounded-2xl font-[1rem] text-white w-[100%] mb-[0.5rem] ">Add</button>
         
     
     
