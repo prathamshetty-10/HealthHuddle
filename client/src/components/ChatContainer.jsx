@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { sendMessageRoute } from "../utils/APIRoutes";
-export default function ChatContainer({currentuser,currentChat,socket}){
+export default function ChatContainer({currentuser,currentChat,socket,handleNewMsg}){
     const [messages,setMessages]=useState([]);
     const [arrivalMessage,setArrivalmessage]=useState(null);
     const handleSendMessage=async(msg)=>{
@@ -52,7 +52,10 @@ export default function ChatContainer({currentuser,currentChat,socket}){
                 fromSelf:false,
                 message:arrivalMessage.message
              }
-             setMessages((prev)=>[...prev,newmsg])}}
+             setMessages((prev)=>[...prev,newmsg])}
+            else{
+                handleNewMsg(arrivalMessage.from);
+            }}
     },[arrivalMessage])
     return(
         <div className="max-h-[100%] overflow-hidden ">
