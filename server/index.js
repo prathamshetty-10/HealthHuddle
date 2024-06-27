@@ -48,7 +48,7 @@ const server=app.listen(process.env.PORT,()=>{
 
 const io=new Server(server,{
     cors:{
-        origin:"https://health-huddle.vercel.app/",
+        origin:"https://health-huddle.vercel.app/",//http://localhost:5173
         
         methods: ["GET", "POST"],
 

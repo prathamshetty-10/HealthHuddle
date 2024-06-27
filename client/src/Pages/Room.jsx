@@ -12,7 +12,7 @@ import Robot from '../assets/robot.gif'
 import axios from "axios";
 import RoomContainer from "../components/RoomContainer.jsx";
 import io from 'socket.io-client'
-const socket=io.connect("http://localhost:5000");
+const socket=io.connect("https://healthhuddle-1.onrender.com");
 export default function Room(){
     const navigate=useNavigate();
     const [currentRoom,setCurrentRoom]=useState(undefined);
