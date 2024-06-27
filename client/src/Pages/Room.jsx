@@ -1,13 +1,12 @@
 import React from "react";
-import { useState } from "react";
-import Welcome from "../components/Welcome.jsx";
-import {BiPowerOff} from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
+import {BiPowerOff} from 'react-icons/bi'
 import { FaRocketchat } from "react-icons/fa";
 import { SiGoogleclassroom } from "react-icons/si";
 import { MdPersonSearch } from "react-icons/md";
-export default function Home(){
-    const [currentuser,setCurrentUser]=useState(JSON.parse(localStorage.getItem("login-user")));
+import { useState } from "react";
+import { useEffect } from "react";
+export default function Room(){
     const navigate=useNavigate();
     const handleClick1=async()=>{
         localStorage.clear();
@@ -26,13 +25,6 @@ export default function Home(){
         
 
         
-        </div>
-        
-        <div className="flex items-center justify-center h-[90%]"><Welcome currentuser={currentuser}/></div>
-        
-        </div>
-        
-        
-        </div>
+        </div></div></div>
     )
 }
