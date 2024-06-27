@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import userRoutes from './Routes/userRoutes.js'
+import messageRoute from './Routes/messageRoute.js'
 import morgan from 'morgan'
 import cloudinary from 'cloudinary'
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('/api/auth',userRoutes);
+app.use('/api/messages',messageRoute)
 
 cloudinary.v2.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,

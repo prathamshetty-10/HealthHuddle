@@ -1,16 +1,37 @@
 import React from "react";
 
 import ChatInput from "./ChatInput";
+import { getMessageRoute } from "../utils/APIRoutes";
 
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { sendMessageRoute } from "../utils/APIRoutes";
 export default function ChatContainer({currentuser,currentChat}){
     const [messages,setMessages]=useState([]);
-    const handleSendMessage=()=>{
-        console.log('hi');
+    const handleSendMessage=async(msg)=>{
+        await axios.post(sendMessageRoute,{
+            from:currentuser.username,
+            to:currentChat.username2,
+            message:msg,
+        })
+        
+        const msgs=[...messages];
+        msgs.push({fromSelf:true,message:msg});
+        setMessages(msgs);
     }
+    const func=async()=>{
+        if(currentChat){
+        const response=await axios.post(getMessageRoute,{
+            from:currentuser.username,
+            to:currentChat.username2,
+        })
+        setMessages(response.data);}
+    }
+    useEffect(()=>{
+        func();
+    },[currentChat])
     return(
         <div className="max-h-[100%] overflow-hidden ">
         
@@ -30,7 +51,7 @@ export default function ChatContainer({currentuser,currentChat}){
             messages.map((message)=>{
                 return(
                 <div key={message}>
-                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[50%] my-[15px] ml-[200px] lg:ml-[420px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[50%] my-[15px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
+                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[50%] my-[15px] ml-[200px] lg:ml-[420px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-purple-800">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[50%] my-[15px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-blue-900">{message.message}</div></div>)
                 }
                 </div>
 
