@@ -45,15 +45,15 @@ mongoose.connect(process.env.MONGO_URL)
 const server=app.listen(process.env.PORT,()=>{
     console.log(`connected to server port ${process.env.PORT}`);
 })
-
-const io=new Server(server,{
-    cors:{
-        origin:"https://health-huddle.vercel.app/",//http://localhost:5173
+const io=new Server(server);
+//const io=new Server(server,{
+    //cors:{
+       // origin:"https://health-huddle.vercel.app/",//http://localhost:5173
         
-        methods: ["GET", "POST"],
+       // methods: ["GET", "POST"],
 
-    },
-})
+   // },
+//})
 global.onlineUsers=new Map();
 io.on("connection",(socket)=>{
     console.log(`user connected ${socket.id}`)
