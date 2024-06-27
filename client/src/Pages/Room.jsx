@@ -11,6 +11,8 @@ import RoomSide from '../components/RoomSide.jsx'
 import Robot from '../assets/robot.gif'
 import axios from "axios";
 import RoomContainer from "../components/RoomContainer.jsx";
+import io from 'socket.io-client'
+const socket=io.connect("http://localhost:5000");
 export default function Room(){
     const navigate=useNavigate();
     const [currentRoom,setCurrentRoom]=useState(undefined);
@@ -36,6 +38,9 @@ export default function Room(){
     useEffect(()=>{
         func();
     },[])
+    useEffect(()=>{
+        if(currentRoom)socket.emit("join_room", currentRoom.name);
+    },[currentRoom])
     return(
         <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
         
@@ -56,7 +61,7 @@ export default function Room(){
         </div>
         <div className="w-[75%]">
             {currentRoom===undefined?(
-            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom}/>)}
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom} socket={socket}/>)}
             
             </div>
     

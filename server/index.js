@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import userRoutes from './Routes/userRoutes.js'
 import messageRoute from './Routes/messageRoute.js'
 import roomRoute from './Routes/roomRoute.js'
+import roomMessageRoute from './Routes/roomMessageRoute.js'
 import morgan from 'morgan'
 import cloudinary from 'cloudinary'
 
@@ -23,7 +24,8 @@ app.use(express.urlencoded({extended:true}))
 
 app.use('/api/auth',userRoutes);
 app.use('/api/messages',messageRoute);
-app.use('/api/room',roomRoute)
+app.use('/api/room',roomRoute);
+app.use('/api/roomMessages',roomMessageRoute)
 
 
 cloudinary.v2.config({
@@ -67,6 +69,14 @@ io.on("connection",(socket)=>{
             console.log(`emmiting received data ${data.message} to ${sendUserSocket}`)
             socket.to(sendUserSocket).emit("msg-receive",data);
         }
-    })
+    });
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room: ${data}`);
+      });
+    socket.on("send_mesg-room", (data) => {
+    
+        socket.to(data.room).emit("receive_message", data);
+      });
     
 })

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import { SiGoogleclassroom } from "react-icons/si";
 
-function RoomSide({rooms,currentuser,changeRoom}){
+function RoomSide({rooms,currentuser,changeRoom,socket}){
     const [currentUserName,setCurrentUser]=useState(currentuser.username);
     const [currentSelected,setCurrentSelected]=useState(undefined);
 
@@ -12,6 +12,7 @@ function RoomSide({rooms,currentuser,changeRoom}){
         setCurrentSelected(index);
         changeRoom(room);
     }
+    
     return <div className="text-white flex flex-col items-center text-2xl lg:text-3xl gap-[0.8rem]   ">
     
     
