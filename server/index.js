@@ -21,7 +21,8 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('/api/auth',userRoutes);
-app.use('/api/messages',messageRoute)
+app.use('/api/messages',messageRoute);
+
 
 cloudinary.v2.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
