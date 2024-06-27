@@ -73,7 +73,7 @@ export default function RoomContainer({currentuser,currentRoom,socket}){
                     <div className="text-white text-4xl w-[700px]">{currentRoom?.name} 
                     </div>
                     <BsInfoSquare className="h-[45px] w-[40px]  cursor-pointer hover:text-green-500 hover:scale-105" onClick={handleVisible}/>
-                    {visible && <div className=" absolute bottom-[-200px] z-50 w-[550px] text-xl left-[200px] bg-[#ffffff39] rounded-3xl p-[2rem]">{currentRoom.description}</div>}
+                    {visible && <div className=" absolute bottom-[-300px] z-50 w-[550px] text-xl left-[200px] bg-[#ffffff39] rounded-3xl p-[2rem]">{currentRoom.description}</div>}
                 </div>
             </div>
 
