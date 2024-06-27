@@ -47,13 +47,13 @@ export default function RoomContainer({currentuser,currentRoom,socket}){
     useEffect(()=>{
         if(socket){
             socket.on("receive_message",(data)=>{
-                setArrivalmessage({fromSelf:false,message:data.message,from:data.from});
+                setArrivalmessage({fromSelf:false,message:data.message,from:data.from,room:data.room});
             })
         }
     },[])
     useEffect(()=>{
         if(arrivalMessage){ 
-            if(arrivalMessage.room==currentRoom.room){
+            if(arrivalMessage.room==currentRoom.name){
              const newmsg={
                 fromSelf:false,
                 message:arrivalMessage.message,
