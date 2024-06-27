@@ -14,7 +14,7 @@ import ContactsSide from "../components/ContactsSide.jsx";
 import Robot from '../assets/robot.gif'
 import ChatContainer from "../components/ChatContainer.jsx";
 import io from 'socket.io-client'
-const socket=io.connect("https://healthhuddle-1.onrender.com");//http://localhost:5000
+const socket=io.connect("http://localhost:5000");//http://localhost:5000
 function Chat(){
     const navigate=useNavigate();
     
