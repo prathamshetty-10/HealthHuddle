@@ -1,4 +1,4 @@
-const host="http://localhost:5000";
+const host="//https://healthhuddle-1.onrender.com";   //http://localhost:5000
 const registerRoute=`${host}/api/auth/register`;
 const loginRoute=`${host}/api/auth/login`;
 const getContactsRoute=`${host}/api/auth/getcontacts`;
