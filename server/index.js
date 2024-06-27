@@ -3,6 +3,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import userRoutes from './Routes/userRoutes.js'
 import messageRoute from './Routes/messageRoute.js'
+import roomRoute from './Routes/roomRoute.js'
 import morgan from 'morgan'
 import cloudinary from 'cloudinary'
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended:true}))
 
 app.use('/api/auth',userRoutes);
 app.use('/api/messages',messageRoute);
+app.use('/api/room',roomRoute)
 
 
 cloudinary.v2.config({

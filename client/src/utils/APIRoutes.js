@@ -7,4 +7,5 @@ const addContactRoute=`${host}/api/auth/addContact`;
 const deleteContactRoute=`${host}/api/auth/deleteContact`;
 const sendMessageRoute=`${host}/api/messages/addmsg`
 const getMessageRoute=`${host}/api/messages/getmsg`
-export {registerRoute,loginRoute,getContactsRoute,searchUserRoute,addContactRoute,deleteContactRoute,sendMessageRoute,getMessageRoute}
+const getRoomsRoute=`${host}/api/room/getroom`
+export {registerRoute,loginRoute,getContactsRoute,searchUserRoute,addContactRoute,deleteContactRoute,sendMessageRoute,getMessageRoute,getRoomsRoute}
