@@ -6,6 +6,8 @@ import messageRoute from './Routes/messageRoute.js'
 import morgan from 'morgan'
 import cloudinary from 'cloudinary'
 
+import {Server}  from 'socket.io'
+
 mongoose.set('strictQuery',false)
 const app=express();
 import config from 'dotenv'
@@ -37,4 +39,31 @@ mongoose.connect(process.env.MONGO_URL)
     })
 const server=app.listen(process.env.PORT,()=>{
     console.log(`connected to server port ${process.env.PORT}`);
+})
+
+const io=new Server(server,{
+    cors:{
+        origin:"http://localhost:5173",
+        
+        methods: ["GET", "POST"],
+
+    },
+})
+global.onlineUsers=new Map();
+io.on("connection",(socket)=>{
+    console.log(`user connected ${socket.id}`)
+    global.chatSocket=socket; 
+    socket.on("add-user",(userId)=>{
+        console.log(`adding user ${userId} ${socket.id}`)
+        onlineUsers.set(userId,socket.id);
+    });
+    socket.on("send-msg",(data)=>{
+        console.log('reached here');
+        const sendUserSocket=onlineUsers.get(data.to);
+        if(sendUserSocket){
+            console.log(`emmiting received data ${data.message} to ${sendUserSocket}`)
+            socket.to(sendUserSocket).emit("msg-receive",data);
+        }
+    })
+    
 })
