@@ -27,12 +27,12 @@ function RoomSide({rooms,currentuser,changeRoom,socket}){
         rooms?.map((room,index)=>{
             return(
                 currentSelected===index?(
-                    <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-2xl bg-[#762b98] min-h-[5rem] w-[90%] transition ease-in-out duration-200 my-[10px] border-2 border-white" key={index} onClick={()=>changeCurrentRoom(index,room)}>
-                    <SiGoogleclassroom  className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] " />
+                    <div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center text-lg font-bold  lg:text-2xl bg-[#762b98] min-h-[5rem] w-[90%] transition ease-in-out duration-200 my-[10px] border-2 border-white" key={index} onClick={()=>changeCurrentRoom(index,room)}>
+                    <SiGoogleclassroom  className="h-[0px] lg:h-[40px] w-[0px] lg:w-[40px] " />
                     <div className="text-white">{room.name}</div>
                     </div>
-                ):(<div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center lg:text-2xl bg-[#ffffff39] min-h-[5rem] w-[90%] transition ease-in-out duration-200 my-[10px]" key={index} onClick={()=>changeCurrentRoom(index,room)}>
-                    <SiGoogleclassroom  className="h-[30px] lg:h-[40px] w-[30px] lg:w-[40px] " />
+                ):(<div className="flex gap-[8px] lg:gap-[40px] cursor-pointer rounded-[0.5rem] lg:p-[0.4rem]   items-center justify-center text-lg font-bold lg:text-2xl bg-[#ffffff39] min-h-[5rem] w-[90%] transition ease-in-out duration-200 my-[10px]" key={index} onClick={()=>changeCurrentRoom(index,room)}>
+                    <SiGoogleclassroom  className="h-[0px] lg:h-[40px] w-[0px] lg:w-[40px] " />
                     <div className="text-white">{room.name}</div>
                     </div>)
                 

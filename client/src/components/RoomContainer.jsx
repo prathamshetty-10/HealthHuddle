@@ -68,12 +68,12 @@ export default function RoomContainer({currentuser,currentRoom,socket}){
         {currentRoom && (
         <div className="flex flex-col">
             <div className="flex text-white justify-between items-center py-[1rem] px-[3rem] bg-[#ffffff39] rounded-3xl relative">
-                <div className="flex gap-[3rem]">
+                <div className="flex gap-[3rem] justify-center items-center">
                     <SiGoogleclassroom  className="h-[50px] w-[50px]" />
-                    <div className="text-white text-4xl w-[700px]">{currentRoom?.name} 
+                    <div className="text-white text-2xl text-center lg:text-4xl w-[220px] lg:w-[700px]">{currentRoom?.name} 
                     </div>
                     <BsInfoSquare className="h-[45px] w-[40px]  cursor-pointer hover:text-green-500 hover:scale-105" onClick={handleVisible}/>
-                    {visible && <div className=" absolute bottom-[-300px] z-50 w-[550px] text-xl left-[200px] bg-[#ffffff39] rounded-3xl p-[2rem]">{currentRoom.description}</div>}
+                    {visible && <div className=" absolute bottom-[-300px] z-50 w-[300px] lg:w-[550px] text-xl left-[90px] lg:left-[200px] bg-[#ffffff39] rounded-3xl p-[2rem] break-words">{currentRoom.description}</div>}
                 </div>
             </div>
 

@@ -46,7 +46,7 @@ export default function Room(){
         
         <div className="h-[100vh] w-[85vw] bg-[#00000076] ">
         <div className=" h-[10%] pt-[3rem] flex justify-center items-center gap-[1.5rem] mb-[40px] relative">
-        <div className="absolute left-[50px] w-[200px]  rounded-3xl p-[0.5rem] text-center h-[40px] font-bold bg-green-600 text-black text-xl hover:bg-green-400 cursor-pointer" onClick={()=>navigate('/addroom')}>Add Room</div>
+        <div className="absolute top-[650px] left-0 lg:top-[40px] lg:left-[50px] w-[150px] lg:w-[200px]  rounded-3xl p-[0.5rem] text-center h-[40px] font-bold bg-green-600 text-black text-xl hover:bg-green-400 cursor-pointer" onClick={()=>navigate('/addroom')}>Add Room</div>
         <button onClick={()=>navigate('/chats')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><FaRocketchat className="mr-[4px]"/>Chats</button>
         <button onClick={()=>navigate('/contacts')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><MdPersonSearch className="mr-[4px]"/>Contacts</button>
         <button onClick={()=>navigate('/room')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><SiGoogleclassroom className="mr-[4px]"/>Rooms</button>
@@ -61,7 +61,7 @@ export default function Room(){
         </div>
         <div className="w-[75%]">
             {currentRoom===undefined?(
-            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom} socket={socket}/>)}
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold text-center"> Choose a Room to begin your conversation</p></div>):(<RoomContainer currentuser={currentuser} currentRoom={currentRoom} socket={socket}/>)}
             
             </div>
     

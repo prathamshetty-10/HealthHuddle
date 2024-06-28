@@ -50,13 +50,16 @@ function Chat(){
     useEffect(()=>{
         func();
     },[])
+    useEffect(()=>{
+        newmsg != "" && toast.success(`New Message from ${newmsg}`)
+    },[newmsg])
     return(
     <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
         
     <div className="h-[100vh] w-[85vw] bg-[#00000076] ">
     
     <div className=" h-[10%] pt-[3rem] flex justify-center items-center gap-[1.5rem] mb-[40px] relative">
-    {newmsg==""?(<div className="text-white absolute left-[50px] w-[250px] bg-[#ffffff39] h-[40px] rounded-3xl p-[0.5rem] text-center">No Activity</div>):(<div className="text-white absolute left-[50px] w-[250px] bg-[#ffffff39] h-[40px] rounded-3xl p-[0.5rem] text-center">Message from :{newmsg}</div>)}
+   
     <button onClick={()=>navigate('/chats')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><FaRocketchat className="mr-[4px]"/>Chats</button>
     <button onClick={()=>navigate('/contacts')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><MdPersonSearch className="mr-[4px]"/>Contacts</button>
     <button onClick={()=>navigate('/room')} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-2xl text-2xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700 font-bold w-[140px]"><SiGoogleclassroom className="mr-[4px]"/>Rooms</button>
@@ -71,7 +74,7 @@ function Chat(){
         </div>
         <div className="w-[75%]">
             {currentChat===undefined?(
-            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold"> Choose a Chat to begin your conversation</p></div>):(<ChatContainer currentuser={currentuser} currentChat={currentChat} socket={socket} handleNewMsg={handleNewMsg}/>)}
+            <div className="flex flex-col items-center justify-center gap-[2rem]"><img src={Robot} alt="hi" className="h-[400px] w-[400px]"></img><p className="text-3xl text-white font-bold text-center"> Choose a Chat to begin your conversation</p></div>):(<ChatContainer currentuser={currentuser} currentChat={currentChat} socket={socket} handleNewMsg={handleNewMsg}/>)}
             
             </div>
     
